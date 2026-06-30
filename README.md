@@ -1,58 +1,78 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Loyalty Points Dashboard
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack loyalty rewards platform built with Laravel, where members earn points, track their balance, and redeem rewards from a catalogue, with a dedicated admin panel for managing members and crediting points.
+This project was built as a hands-on way to learn Laravel and PHP from the ground up, with a focus on clean architecture, defensive coding, and a fully containerized development environment.
 
-## About Laravel
+Features:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Authentication — registration, login, logout, and email verification via Laravel Breeze
+Member Dashboard — real-time points balance and paginated transaction history
+Rewards Catalogue — browse and redeem rewards, with validation to prevent overspending
+Admin Panel — role-protected area to view all members and manually credit points
+Responsive UI — built with Tailwind CSS, works cleanly on mobile and desktop
+Fully Dockerized — PHP, Nginx, and MySQL run as isolated containers, so the entire environment spins up identically on any machine
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Tech Stack:
 
-## Learning Laravel
+Backend: PHP 8.4, Laravel 13
+Frontend: Blade templates, Tailwind CSS, Vite
+Database: MySQL 8.0
+Infrastructure: Docker, Docker Compose, Nginx
+Auth: Laravel Breeze
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Getting Started:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This project runs entirely in Docker, so no local PHP or MySQL installation is required.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Prerequisites:
 
-## Agentic Development
+Docker Desktop
+Node.js (for building frontend assets)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
 
-```bash
-composer require laravel/boost --dev
+Setup:
 
-php artisan boost:install
-```
+bashgit clone https://github.com/jessicamalvaro-projects/LoyaltyPointsDashboard.git
+cd LoyaltyPointsDashboard
+cp .env.example .env
+docker compose up -d --build
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate --seed
+npm install
+npm run build
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Visit http://localhost:8080 and register a new account to explore the dashboard.
 
-## Contributing
+Making yourself an admin:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To access the admin panel, promote your account via Tinker:
 
-## Code of Conduct
+bashdocker compose exec app php artisan tinker
+php\App\Models\User::where('email', 'your@email.com')->update(['is_admin' => true]);
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Project Structure:
 
-## Security Vulnerabilities
+app/
+  Http/Controllers/    → DashboardController, RewardController, AdminController
+  Models/               → User, PointTransaction, Reward
+database/
+  migrations/           → schema for users, point_transactions, rewards
+  seeders/              → demo data for transactions and rewards
+resources/views/
+  dashboard.blade.php
+  rewards/index.blade.php
+  admin/index.blade.php
+docker-compose.yml      → app, nginx, and db containers
+Dockerfile               → PHP 8.4-fpm application image
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+What I'd Build Next:
 
-## License
+Email notifications when points are earned or a reward is redeemed
+A points expiry system for inactive accounts
+An audit log on the admin panel showing which admin credited which user, and when
+API endpoints so a mobile app could plug into the same backend
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+About This Project
+I built this in a week as a self-directed way to get hands-on with Laravel, having come from a background in C#/.NET, Java, and Kotlin. The goal was to demonstrate that I can pick up a new framework quickly and ship something functional, well-structured, and properly containerized — not just follow a tutorial, but actually understand the decisions behind authentication, data modeling, and defensive validation.
+I built this in a week as a self-directed way to get hands-on with Laravel, having come from a background in C#/.NET, Java, and Kotlin. The goal was to demonstrate that I can pick up a new framework quickly and ship something functional, well-structured, and properly containerized — not just follow a tutorial, but actually understand the decisions behind authentication, data modeling, and defensive validation.
