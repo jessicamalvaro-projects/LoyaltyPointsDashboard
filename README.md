@@ -49,6 +49,7 @@ Making yourself an admin:
 To access the admin panel, promote your account via Tinker:
 
 bashdocker compose exec app php artisan tinker
+
 php\App\Models\User::where('email', 'your@email.com')->update(['is_admin' => true]);
 
 Project Structure:
@@ -74,5 +75,4 @@ An audit log on the admin panel showing which admin credited which user, and whe
 API endpoints so a mobile app could plug into the same backend
 
 About This Project
-I built this in a week as a self-directed way to get hands-on with Laravel, having come from a background in C#/.NET, Java, and Kotlin. The goal was to demonstrate that I can pick up a new framework quickly and ship something functional, well-structured, and properly containerized — not just follow a tutorial, but actually understand the decisions behind authentication, data modeling, and defensive validation.
-I built this in a week as a self-directed way to get hands-on with Laravel, having come from a background in C#/.NET, Java, and Kotlin. The goal was to demonstrate that I can pick up a new framework quickly and ship something functional, well-structured, and properly containerized — not just follow a tutorial, but actually understand the decisions behind authentication, data modeling, and defensive validation.
+I built this in a week as a self-directed way to get hands-on with Laravel, having come from a background in C#/.NET, Java, and Kotlin. The goal was to demonstrate that I can pick up a new framework quickly and ship something functional, well-structured, and properly containerized, not just follow a tutorial, but actually understand the decisions behind authentication, data modeling, and defensive validation.
